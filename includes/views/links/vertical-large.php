@@ -2,7 +2,7 @@
 <style>
 
     .ct-social-link{
-        padding: 10px;
+        padding: 20px;
         display: block;
         margin-bottom: 5px;
     }

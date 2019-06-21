@@ -6,7 +6,7 @@
 /**
  * Plugin Name: CT Social
  * Plugin URI: http://url.com
- * Description: This plugin is a plugin experimentation
+ * Description: This plugin is a plugin for generating shortcodes
  * Version: 1.0.0
  * Author: Uelmar Ortega
  * Author URI: http://author.com
@@ -16,7 +16,28 @@
 
 defined('ABSPATH') or die();
 
-require 'includes/library/CTSocial.php';
+require 'includes/library/index.php';
+require 'includes/library/CustomizerConfig.php';
+
+class CTSocial
+{
+    function activate()
+    {
+       //  generated a CPT
+       flush_rewrite_rules();
+    }
+
+    function diactivate()
+    {
+       //  flush rewrite rules
+       flush_rewrite_rules();
+    }
+
+    function uninstall()
+    {
+       //  delete all the plugin data from DB
+    }
+}
 
 $ct_social = new CTSocial();
 

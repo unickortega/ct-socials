@@ -1,5 +1,5 @@
 <style>
-.ct-facebook-feed-item{
+.ct-twitter-feed-item{
     background: white;
     padding: 15px;
     border-radius: 15px;
@@ -9,8 +9,15 @@
     color: inherit!important;
 }
 
-.ct-facebook-feed-item .post-picture{
+.ct-twitter-feed-item .post-picture{
     width: 100%;
+}
+
+.ct-twitter-feed-item .auth-info img{
+    vertical-align: middle;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
 }
 
 .ct-facebook-feed-item .created_date{
@@ -19,52 +26,54 @@
 </style>
 
 <?php
-$posts = $data['posts'];
-foreach($posts as $post)
+$tweets = $data['tweets'];
+foreach($tweets as $tweet)
 {
     ?>
-    <a class="ct-facebook-feed-item" target="_blank" href="<?php echo $post->permalink_url ?>">
+    <script>console.log(JSON.parse('<?php echo addslashes(json_encode($tweet)); ?>'))</script>
+    <div class="ct-twitter-feed-item">
         <?php
 
-        if(isset($post->from))
+        if(isset($tweet->user))
         {
             ?>
-            <div>
-                <b><?php echo $post->from->name; ?></b>
+            <div class="auth-info">
+                <img src="<?php echo $tweet->user->profile_image_url_https; ?>">
+                <b><?php echo $tweet->user->name; ?></b>
             </div>
             <?php
         }
 
-        if(isset($post->message))
+        if(isset($tweet->text))
         {
             ?>
             <div>
-                <?php echo $post->message; ?>
+                <?php echo $tweet->text; ?>
             </div>
             <?php
         }
         
-        if(isset($post->full_picture))
+        if(isset($tweet->entities->media[0]))
         {
             ?>
             <div>
-                <img class="post-picture" src="<?php echo $post->full_picture; ?>">
+                <img class="post-picture" src="<?php echo $tweet->entities->media[0]->media_url_https; ?>">
             </div>
             <?php
         }
 
-        if(isset($post->name))
+        if(isset($tweet->name))
         {
             ?>
             <div>
-                <?php echo $post->name; ?>
+                <?php echo $tweet->name; ?>
             </div>
             <?php
         }
 
-        if(isset($post->created_time))
+        if(isset($tweet->created_at))
         {
-            $time = strtotime($post->created_time);
+            $time = strtotime($tweet->created_at);
 
             $newformat = date("F j, Y, g:i a",$time);
             ?>
@@ -75,7 +84,7 @@ foreach($posts as $post)
         }
 
         ?>
-    </a>
+    </div>
     <?php
 }
 
